@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Métricas — Universo Gatitos Boticarios</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .metrics-page { padding: 100px 0 60px; min-height: 100vh; }
+    .metrics-header { text-align: center; margin-bottom: 40px; }
+    .metrics-header h1 {
+      font-family: 'Cinzel Decorative', serif;
+      color: var(--dark-green);
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .metrics-header p { color: var(--text-muted); }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .metric-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      border-top: 4px solid var(--gold);
+    }
+    .metric-value {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 2.5rem;
+      color: var(--dark-green);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .metric-label {
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .downloads-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .downloads-table th {
+      background: var(--dark-green);
+      color: var(--gold);
+      padding: 14px 18px;
+      text-align: left;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.9rem;
+    }
+    .downloads-table td {
+      padding: 12px 18px;
+      border-bottom: 1px solid rgba(212,175,55,0.1);
+      font-size: 0.9rem;
+    }
+    .downloads-table tr:last-child td { border-bottom: 0; }
+    .downloads-table tr:nth-child(even) { background: var(--parchment); }
+
+    .visits-list {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .visits-list h4 {
+      font-family: 'Cinzel Decorative', serif;
+      color: var(--dark-green);
+      margin: 0 0 14px;
+    }
+    .visit-day { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .visit-day:last-child { border-bottom: 0; }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .actions-bar {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .btn-danger {
+      background: #b42828;
+      color: #fff;
+      border: 0;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: all 0.25s ease;
+    }
+    .btn-danger:hover { background: #932020; transform: translateY(-1px); }
+
+    @media (max-width: 480px) {
+      .metrics-grid { grid-template-columns: 1fr; }
+      .metric-value { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap header-wrap">
+      <div class="brand">
+        <a href="index.html" class="brand-link">
+          <img src="assets/images/logo.png" alt="Logo" class="brand-logo">
+          <span class="brand-text">Universo Gatitos Boticarios</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="metrics-page">
+    <div class="wrap">
+      <a href="index.html" class="btn btn-outline btn-sm btn-back">← Volver al inicio</a>
+
+      <div class="metrics-header">
+        <h1>📊 Panel de Métricas</h1>
+        <p>Estadísticas locales almacenadas en el navegador del visitante.</p>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-value" id="totalVisits">0</div>
+          <div class="metric-label">Visitas totales</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" id="todayVisits">0</div>
+          <div class="metric-label">Visitas hoy</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" id="formsSent">0</div>
+          <div class="metric-label">Formularios enviados</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" id="totalDownloads">0</div>
+          <div class="metric-label">Descargas totales</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:30px;">
+        <div>
+          <h3 style="font-family:'Cinzel Decorative',serif;color:var(--dark-green);margin-bottom:14px;">Descargas por archivo</h3>
+          <table class="downloads-table">
+            <thead><tr><th>Archivo</th><th>Descargas</th></tr></thead>
+            <tbody id="downloadsBody">
+              <tr><td colspan="2" style="text-align:center;color:var(--text-muted);">Sin descargas registradas</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="visits-list">
+          <h4>Visitas por día</h4>
+          <div id="visitsByDay">
+            <p style="color:var(--text-muted);text-align:center;">Sin datos</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions-bar">
+        <button class="btn-danger" onclick="clearMetrics()">🗑️ Limpiar métricas</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function loadMetrics() {
+      let data;
+      try {
+        data = JSON.parse(localStorage.getItem('ugb_metrics')) || { visits: [], forms_sent: 0, downloads: {} };
+      } catch { data = { visits: [], forms_sent: 0, downloads: {} }; }
+
+      const today = new Date().toISOString().slice(0, 10);
+
+      // Total visits
+      document.getElementById('totalVisits').textContent = data.visits.length;
+
+      // Today
+      const todayCount = data.visits.filter(v => v.date === today).length;
+      document.getElementById('todayVisits').textContent = todayCount;
+
+      // Forms
+      document.getElementById('formsSent').textContent = data.forms_sent || 0;
+
+      // Downloads
+      const downloads = data.downloads || {};
+      const dlEntries = Object.entries(downloads);
+      const totalDL = dlEntries.reduce((s, [, c]) => s + c, 0);
+      document.getElementById('totalDownloads').textContent = totalDL;
+
+      const tbody = document.getElementById('downloadsBody');
+      if (dlEntries.length > 0) {
+        tbody.innerHTML = dlEntries
+          .sort((a, b) => b[1] - a[1])
+          .map(([file, count]) => {
+            const shortName = file.split('/').pop();
+            return `<tr><td title="${file}">${shortName}</td><td><strong>${count}</strong></td></tr>`;
+          }).join('');
+      }
+
+      // Visits by day
+      const byDay = {};
+      data.visits.forEach(v => { byDay[v.date] = (byDay[v.date] || 0) + 1; });
+      const dayEntries = Object.entries(byDay).sort((a, b) => b[0].localeCompare(a[0]));
+      const container = document.getElementById('visitsByDay');
+      if (dayEntries.length > 0) {
+        container.innerHTML = dayEntries.map(([day, count]) =>
+          `<div class="visit-day"><span>${day}</span><strong>${count}</strong></div>`
+        ).join('');
+      }
+    }
+
+    function clearMetrics() {
+      if (confirm('¿Estás seguro de que quieres limpiar todas las métricas?')) {
+        localStorage.removeItem('ugb_metrics');
+        loadMetrics();
+      }
+    }
+
+    loadMetrics();
+  </script>
+</body>
+</html>

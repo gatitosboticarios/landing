@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Universo Gatitos Boticarios — Juegos de Mesa</title>
+  <meta name="description" content="Universo Gatitos Boticarios: juegos de mesa cozy de estrategia y recolección ambientados en un bosque alquímico. Descubre Gatitos Boticarios, ¡Astuta la Rata! y Manita de Gato.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/favicon-192.png">
+  <link rel="apple-touch-icon" href="assets/favicon/favicon-192.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header" id="site-header">
+    <div class="wrap header-wrap">
+      <div class="brand">
+        <a href="#inicio" class="brand-link">
+          <img src="assets/images/logo.png" alt="Logo Universo Gatitos Boticarios" class="brand-logo">
+          <span class="brand-text">Universo Gatitos Boticarios</span>
+        </a>
+      </div>
+      <nav class="main-nav" aria-label="Navegación principal">
+        <ul id="navMenu">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#juegos">Juegos</a></li>
+          <li><a href="#comics">Cómics</a></li>
+          <li><a href="#editoriales">Editoriales</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+        <button id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
+          <span class="hamburger"></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===== HERO ===== -->
+    <section id="inicio" class="hero" role="region" aria-label="Bienvenida">
+      <div class="hero-overlay"></div>
+      <div class="hero-inner wrap">
+        <img src="assets/images/logo.png" alt="Logo" class="hero-logo" />
+        <h1>Universo Gatitos Boticarios</h1>
+        <p class="tagline">Juegos de mesa cozy de estrategia, recolección y alquimia del bosque</p>
+        <p class="hero-cta">
+          <a href="#juegos" class="btn btn-primary">Descubre los juegos</a>
+          <a href="#comics" class="btn btn-ghost">Lee los cómics</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== JUEGOS (dinámico) ===== -->
+    <section id="juegos" class="section">
+      <div class="wrap">
+        <h2 class="section-title"><span>Nuestros Juegos</span></h2>
+        <div id="gamesGrid" class="games-grid">
+          <!-- Rendered by JS from data/games.json -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== COMICS (dinámico) ===== -->
+    <section id="comics" class="section section-alt">
+      <div class="wrap">
+        <h2 class="section-title"><span>Cómics del Universo</span></h2>
+        <p class="section-desc">Descarga los cómics de presentación del universo Gatitos Boticarios.</p>
+        <div id="comicsGrid" class="comics-grid">
+          <!-- Rendered by JS from data/comics.json -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== EDITORIALES ===== -->
+    <section id="editoriales" class="section">
+      <div class="wrap">
+        <h2 class="section-title"><span>Información para Editoriales</span></h2>
+        <div class="editorial-grid">
+          <div class="editorial-card">
+            <div class="editorial-icon">📋</div>
+            <h4>Pitch resumen</h4>
+            <p><strong>Universo Gatitos Boticarios</strong> es una IP cozy‑fantástica orientada a familias y público hobby. Mecánicas: exploración modular, gestión de recursos, colección e interacción táctica. Estética ilustrativa altamente vendible en ferias y campañas de crowdfunding.</p>
+          </div>
+          <div class="editorial-card">
+            <div class="editorial-icon">📦</div>
+            <h4>Qué ofrecemos</h4>
+            <ul>
+              <li>Prototipos completos (Reglas + Arte + Sell sheets)</li>
+              <li>3 juegos en el universo con mecánicas distintas</li>
+              <li>Materiales gráficos listos para presentaciones</li>
+              <li>Soporte para localización y producción</li>
+            </ul>
+          </div>
+          <div class="editorial-card">
+            <div class="editorial-icon">🎨</div>
+            <h4>Arte y diseño</h4>
+            <p>Ilustraciones originales de alta calidad con estética botánica y fantástica. Cada carta incluye datos educativos integrados sobre flora y fauna.</p>
+          </div>
+        </div>
+        <div class="editorial-cta">
+          <p>Si eres editorial y quieres material adicional (tableros de alta resolución, archivos de impresión), contáctanos:</p>
+          <a href="#contacto" class="btn btn-primary">Contacto para editoriales</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACTO ===== -->
+    <section id="contacto" class="section section-alt">
+      <div class="wrap">
+        <h2 class="section-title"><span>Contacto</span></h2>
+        <div class="contact-layout">
+          <div class="contact-info">
+            <h4>Escríbenos</h4>
+            <p>¿Eres editorial, creador de contenido o fan de juegos de mesa? Nos encantaría saber de ti.</p>
+            <div class="contact-email">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <a href="mailto:gatitosboticarios@gmail.com">gatitosboticarios@gmail.com</a>
+            </div>
+          </div>
+
+          <form id="contactForm" class="contact-form" novalidate>
+            <div class="form-group">
+              <label for="contactType">Tipo de contacto</label>
+              <select id="contactType" name="contact_type" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option value="Editorial">Editorial</option>
+                <option value="Fan de Juegos de Mesa">Fan de Juegos de Mesa</option>
+                <option value="Creador de contenido">Creador de contenido</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="contactName">Nombre</label>
+              <input type="text" id="contactName" name="user_name" required placeholder="Tu nombre">
+            </div>
+
+            <div class="form-group">
+              <label for="contactEmail">Correo electrónico</label>
+              <input type="email" id="contactEmail" name="user_email" required placeholder="tu@correo.com">
+            </div>
+
+            <div class="form-group">
+              <label for="contactMessage">Mensaje <span class="char-counter" id="charCounter">(0 / 1000)</span></label>
+              <textarea id="contactMessage" name="message" rows="5" required maxlength="1000" placeholder="Cuéntanos tu idea o consulta…"></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="submitBtn">
+                <span class="btn-text">Enviar mensaje</span>
+                <span class="btn-loading" style="display:none;">Enviando…</span>
+              </button>
+              <button type="button" id="clearBtn" class="btn btn-outline">Borrar</button>
+            </div>
+
+            <div id="formStatus" class="form-status" role="alert" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="wrap footer-wrap">
+      <div class="footer-brand">
+        <img src="assets/images/logo.png" alt="Logo" class="footer-logo">
+        <p>&copy; 2026 Universo Gatitos Boticarios<br>Todos los derechos reservados.</p>
+        <p class="footer-credit">Diseño e ilustraciones: José Clavijo Díaz</p>
+      </div>
+
+      <div class="footer-links">
+        <h5>Enlaces</h5>
+        <ul>
+          <li><a href="#juegos">Juegos</a></li>
+          <li><a href="#comics">Cómics</a></li>
+          <li><a href="#editoriales">Editoriales</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-social" id="footerSocial">
+        <h5>Síguenos</h5>
+        <!-- Rendered by JS from data/social.json -->
+      </div>
+
+      <div class="footer-legal">
+        <a href="legal/terms.html">Términos y Condiciones</a>
+        <a href="legal/privacy.html">Política de Privacidad</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== VIEWER MODAL ===== -->
+  <div id="viewerModal" class="modal" aria-hidden="true" role="dialog" aria-label="Visor">
+    <div class="modal-overlay" data-close="true"></div>
+    <div class="modal-content" role="document">
+      <button class="modal-close" aria-label="Cerrar visor">&times;</button>
+      <div class="modal-header">
+        <h3 id="viewerTitle"></h3>
+      </div>
+      <div class="modal-body">
+        <img id="viewerImage" src="" alt="" style="display:none;">
+        <iframe id="viewerPDF" src="" frameborder="0" style="display:none;"></iframe>
+      </div>
+      <div class="modal-controls">
+        <a id="downloadBtn" class="btn btn-primary btn-sm" href="#" download target="_blank" rel="noopener">Descargar</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

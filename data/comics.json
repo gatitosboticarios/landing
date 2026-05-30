@@ -1,0 +1,16 @@
+[
+  {
+    "id": "comic-1",
+    "title": "Cómic Gatitos Boticarios — Capítulo 1",
+    "file": "assets/comics/Comic_Gatitos_Boticarios_1.pdf",
+    "description": "El inicio de la aventura en el Bosque Alquímico.",
+    "order": 1
+  },
+  {
+    "id": "comic-2",
+    "title": "Cómic Gatitos Boticarios — Capítulo 2",
+    "file": "assets/comics/Comic_Gatitos_Boticarios_2.pdf",
+    "description": "Nuevas aventuras y personajes del universo.",
+    "order": 2
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "gatitos-boticarios",
+    "title": "Gatitos Boticarios: Alquimia del Bosque",
+    "subtitle": "El juego insignia del universo",
+    "description": "Sé el gatito boticario con más puntos al final de la partida. Explora un tablero modular de 19 losetas hexagonales, gestiona materiales (Hierbas, Hongos, Minerales, Esencias y Kits de Boticario), cura pacientes del bosque y completa conjuntos de tesoros.",
+    "quote": "Un boticario sabio sabe que el mejor remedio empieza con una caricia.",
+    "players": "2–4",
+    "duration": "30–45 min",
+    "age": "8+",
+    "sellSheet": "assets/sell-sheets/Sell_Sheet_Gatitos_Boticarios.jpg",
+    "manual": "assets/manuales/Manual_Gatitos_Boticarios.pdf",
+    "tags": ["Estrategia", "Recolección", "Cozy"],
+    "components": ["40 Cartas de Pacientes", "100 Cartas de Materiales", "40 Cartas de Eventos", "50 Cartas de Tesoros", "19 Losetas hexagonales", "4 Figuras de Gatitos Boticarios"],
+    "order": 1
+  },
+  {
+    "id": "astuta-la-rata",
+    "title": "¡Astuta la Rata!",
+    "subtitle": "Spin-off oficial — Gestión de mercado",
+    "description": "Sé la Rata Mercader con más Reputación al final de la partida. Gestiona tu mano de Inventario con cartas de Productos, completa los Encargos de los Clientes, aprovecha los Eventos para sabotear a tus rivales y usa tu astucia para ganar.",
+    "quote": "En el mercado de la rata, el que no corre… vuela con el producto ajeno.",
+    "players": "2–6",
+    "duration": "30–45 min",
+    "age": "8+",
+    "sellSheet": "assets/sell-sheets/Sell_Sheet_Astuta_la_Rata.jpg",
+    "manual": "assets/manuales/Manual_Reglas_Astuta_la_Rata.pdf",
+    "tags": ["Interacción", "Sabotaje", "Gestión de mano"],
+    "components": ["40 Cartas de Clientes", "60 Cartas de Inventario (32 Productos + 28 Eventos)", "6 Tarjetas de Referencia"],
+    "order": 2
+  },
+  {
+    "id": "manita-de-gato",
+    "title": "Manita de Gato",
+    "subtitle": "Spin-off oficial — Atención al cliente y sabotaje",
+    "description": "Atiende a los animales del bosque, completa tableros usando insumos (Hierbas, Esencias, Minerales y Kit de Boticario), suma puntos y sabotea a tus rivales para convertirte en el mejor Cuervo estilista del Bosque Alquímico.",
+    "quote": "Una experiencia cozy de estrategia, atención al cliente y sabotaje.",
+    "players": "2–6",
+    "duration": "30–45 min",
+    "age": "8+",
+    "sellSheet": "assets/sell-sheets/Sell_Sheet_Manita_de_Gato.jpg",
+    "manual": "assets/manuales/Manual_Manita_de_Gato.pdf",
+    "tags": ["Estrategia", "Sabotaje", "Dados"],
+    "components": ["40 Tableros de clientes", "80 Marcadores Patita de Gato", "20 Fichas de Insumos", "1 Bolsita", "1 Dado de 6 caras", "8 Tarjetas de Resumen Rápido de Reglas"],
+    "order": 3
+  }
+]
