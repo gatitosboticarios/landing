@@ -1,57 +1,28 @@
 /* ============================================
-   Universo Gatitos Boticarios — Main Script
+   Universo Gatitos Boticarios — App Principal
+   ============================================
+   Depende de:
+   - js/metrics.js (debe cargarse primero)
+   - EmailJS SDK  (debe cargarse primero)
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', function () {
 
   /* =====================
-     METRICS TRACKING
+     EmailJS — Credenciales
      ===================== */
-  const Metrics = {
-    KEY: 'ugb_metrics',
+  const EMAILJS_PUBLIC_KEY       = 'ZhnZtDZRCVZU3qlPp';
+  const EMAILJS_SERVICE_ID       = 'service_88dm6k6';
+  const EMAILJS_TEMPLATE_NOTIFY  = 'template_e8vw94n';
+  const EMAILJS_TEMPLATE_AUTOREPLY = 'template_mwatmj1';
 
-    getAll() {
-      try {
-        return JSON.parse(localStorage.getItem(this.KEY)) || this._defaults();
-      } catch { return this._defaults(); }
-    },
-
-    _defaults() {
-      return {
-        visits: [],
-        forms_sent: 0,
-        downloads: {}
-      };
-    },
-
-    save(data) {
-      localStorage.setItem(this.KEY, JSON.stringify(data));
-    },
-
-    trackVisit() {
-      const data = this.getAll();
-      const today = new Date().toISOString().slice(0, 10);
-      data.visits.push({ date: today, ts: Date.now() });
-      // Keep last 1000 visits
-      if (data.visits.length > 1000) data.visits = data.visits.slice(-1000);
-      this.save(data);
-    },
-
-    trackForm() {
-      const data = this.getAll();
-      data.forms_sent = (data.forms_sent || 0) + 1;
-      this.save(data);
-    },
-
-    trackDownload(filename) {
-      const data = this.getAll();
-      if (!data.downloads) data.downloads = {};
-      data.downloads[filename] = (data.downloads[filename] || 0) + 1;
-      this.save(data);
-    }
-  };
-
-  Metrics.trackVisit();
+  // Inicializar EmailJS (respaldo por si el init inline de index.html no se ejecutó)
+  if (typeof emailjs !== 'undefined') {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+    console.log('[App] EmailJS inicializado con key:', EMAILJS_PUBLIC_KEY.slice(0, 6) + '…');
+  } else {
+    console.warn('[App] EmailJS SDK no encontrado — el formulario usará fallback mailto');
+  }
 
   /* =====================
      MOBILE MENU
@@ -64,8 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const isOpen = navMenu.classList.toggle('open');
       menuToggle.setAttribute('aria-expanded', isOpen);
     });
-
-    // Close menu on link click
     navMenu.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
         navMenu.classList.remove('open');
@@ -226,37 +195,14 @@ document.addEventListener('DOMContentLoaded', function () {
     .catch(err => console.error('Error loading social:', err));
 
   /* =====================
-     DOWNLOAD TRACKING
+     CONTACT FORM + EmailJS
      ===================== */
-  window.trackDL = function (filename) {
-    Metrics.trackDownload(filename);
-  };
-
-  /* =====================
-     CONTACT FORM (EmailJS)
-     ===================== */
-  // NOTE: Replace these with your actual EmailJS credentials
-  // Sign up at https://www.emailjs.com/ and create:
-  // 1. An Email Service (e.g., Gmail)
-  // 2. Two templates:
-  //    - One for notification to owners (template_notify)
-  //    - One for auto-reply to user (template_autoreply)
-  const EMAILJS_PUBLIC_KEY = 'ZhnZtDZRCVZU3qlPp';
-  const EMAILJS_SERVICE_ID = 'service_88dm6k6';
-  const EMAILJS_TEMPLATE_NOTIFY = 'template_e8vw94n';
-  const EMAILJS_TEMPLATE_AUTOREPLY = 'template_mwatmj1';
-
-  // Initialize EmailJS
-  if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
-    emailjs.init(EMAILJS_PUBLIC_KEY);
-  }
-
-  const contactForm = document.getElementById('contactForm');
-  const charCounter = document.getElementById('charCounter');
+  const contactForm  = document.getElementById('contactForm');
+  const charCounter  = document.getElementById('charCounter');
   const messageField = document.getElementById('contactMessage');
-  const formStatus = document.getElementById('formStatus');
-  const submitBtn = document.getElementById('submitBtn');
-  const clearBtn = document.getElementById('clearBtn');
+  const formStatus   = document.getElementById('formStatus');
+  const submitBtn    = document.getElementById('submitBtn');
+  const clearBtn     = document.getElementById('clearBtn');
 
   // Character counter
   if (messageField && charCounter) {
@@ -276,17 +222,76 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Form submission
+  /**
+   * sendEmail — Envía DOS correos vía EmailJS:
+   *   1) Notificación al admin (gatitosboticarios@gmail.com + copia a jm.clavijo.diaz@gmail.com)
+   *   2) Auto-reply de confirmación al usuario
+   *
+   * @param {Object} params - { contact_type, name, email, message }
+   * @returns {Promise<boolean>} true si el email principal se envió, false en caso de error
+   */
+  async function sendEmail({ contact_type, name, email, message }) {
+    if (typeof emailjs === 'undefined') {
+      console.warn('[App] EmailJS no disponible, usando fallback mailto');
+      const subject = encodeURIComponent(`[${contact_type}] Contacto de ${name}`);
+      const body = encodeURIComponent(
+        `Tipo: ${contact_type}\nNombre: ${name}\nCorreo: ${email}\n\nMensaje:\n${message}`
+      );
+      window.open(
+        `mailto:gatitosboticarios@gmail.com,jm.clavijo.diaz@gmail.com?subject=${subject}&body=${body}`,
+        '_blank'
+      );
+      return true; // fallback abierto
+    }
+
+    // Build timestamp for template
+    const now = new Date();
+    const timeStr = now.toLocaleString('es-CL', { dateStyle: 'long', timeStyle: 'short' });
+
+    // 1) Email de NOTIFICACIÓN al admin
+    //    Template template_e8vw94n usa: {{name}}, {{email}}, {{title}}, {{time}}, {{message}}
+    //    To Email: gatitosboticarios@gmail.com (configurado en el template)
+    //    Reply To: {{email}} (para responder directo al usuario)
+    console.log('[App] Enviando email de notificación…');
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_NOTIFY, {
+      contact_type: contact_type,
+      name: name,
+      email: email,
+      title: contact_type,
+      time: timeStr,
+      message: message
+    });
+    console.log('[App] ✅ Email de notificación enviado');
+
+    // 2) Email de AUTO-REPLY al usuario
+    //    Template template_mwatmj1 — confirmación automática
+    try {
+      console.log('[App] Enviando auto-reply al usuario…');
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_AUTOREPLY, {
+        name: name,
+        email: email,
+        contact_type: contact_type
+      });
+      console.log('[App] ✅ Auto-reply enviado');
+    } catch (replyErr) {
+      // No bloqueante: si el auto-reply falla, el formulario sigue siendo exitoso
+      console.warn('[App] ⚠️ Auto-reply no enviado:', replyErr);
+    }
+
+    return true;
+  }
+
+  // Form submission handler
   if (contactForm) {
     contactForm.addEventListener('submit', async function (e) {
       e.preventDefault();
 
-      const type = document.getElementById('contactType').value;
-      const name = document.getElementById('contactName').value.trim();
-      const email = document.getElementById('contactEmail').value.trim();
+      const type    = document.getElementById('contactType').value;
+      const name    = document.getElementById('contactName').value.trim();
+      const email   = document.getElementById('contactEmail').value.trim();
       const message = document.getElementById('contactMessage').value.trim();
 
-      // Validation
+      // ── Validación ──
       if (!type || !name || !email || !message) {
         showStatus('Por favor completa todos los campos.', 'error');
         return;
@@ -301,46 +306,44 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
-      // Show loading
+      // ── Loading state ──
       submitBtn.querySelector('.btn-text').style.display = 'none';
       submitBtn.querySelector('.btn-loading').style.display = 'inline';
       submitBtn.disabled = true;
 
+      // ══════════════════════════════════════════════════════════════
+      // ✅ FIX CRÍTICO: trackFormSubmission() se llama ANTES de sendEmail()
+      //    Así la métrica se registra SIEMPRE, incluso si EmailJS falla
+      //    (ej: 412 Gmail_API insufficient scopes, red caída, etc.)
+      // ══════════════════════════════════════════════════════════════
+      Metrics.trackFormSubmission();
+
       try {
-        if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
-          // Send notification to owners
-          await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_NOTIFY, {
-            contact_type: type,
-            user_name: name,
-            user_email: email,
-            message: message
-          });
+        const sent = await sendEmail({
+          contact_type: type,
+          name: name,
+          email: email,
+          message: message
+        });
 
-          // Send auto-reply to user
-          try {
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_AUTOREPLY, {
-              user_name: name,
-              user_email: email
-            });
-          } catch (err) {
-            console.warn('Auto-reply failed:', err);
+        if (sent) {
+          if (typeof emailjs !== 'undefined') {
+            showStatus('✅ ¡Mensaje enviado con éxito! Te enviaremos una confirmación a tu correo.', 'success');
+          } else {
+            showStatus('✅ Se abrió tu cliente de correo. Si no se abrió, escríbenos directamente a gatitosboticarios@gmail.com', 'success');
           }
-
-          showStatus('✅ ¡Mensaje enviado con éxito! Te enviaremos una confirmación a tu correo.', 'success');
-        } else {
-          // Fallback: mailto
-          const subject = encodeURIComponent(`[${type}] Contacto de ${name}`);
-          const body = encodeURIComponent(`Tipo: ${type}\nNombre: ${name}\nCorreo: ${email}\n\nMensaje:\n${message}`);
-          window.open(`mailto:gatitosboticarios@gmail.com,jm.clavijo.diaz@gmail.com?subject=${subject}&body=${body}`, '_blank');
-          showStatus('✅ Se abrió tu cliente de correo. Si no se abrió, escríbenos directamente a gatitosboticarios@gmail.com', 'success');
         }
 
-        Metrics.trackForm();
         contactForm.reset();
         if (charCounter) charCounter.textContent = '(0 / 1000)';
+
       } catch (err) {
-        console.error('Email send error:', err);
-        showStatus('❌ Error al enviar. Por favor intenta de nuevo o escríbenos directamente a gatitosboticarios@gmail.com', 'error');
+        console.error('[App] Error al enviar email:', err);
+        showStatus(
+          '❌ Error al enviar el correo, pero tu mensaje fue registrado. ' +
+          'Escríbenos directamente a gatitosboticarios@gmail.com',
+          'error'
+        );
       } finally {
         submitBtn.querySelector('.btn-text').style.display = 'inline';
         submitBtn.querySelector('.btn-loading').style.display = 'none';
@@ -364,14 +367,13 @@ document.addEventListener('DOMContentLoaded', function () {
   if (viewerModal) {
     const viewerTitle = document.getElementById('viewerTitle');
     const viewerImage = document.getElementById('viewerImage');
-    const viewerPDF = document.getElementById('viewerPDF');
+    const viewerPDF   = document.getElementById('viewerPDF');
     const downloadBtn = document.getElementById('downloadBtn');
-    const overlay = viewerModal.querySelector('.modal-overlay');
-    const btnClose = viewerModal.querySelector('.modal-close');
+    const overlay     = viewerModal.querySelector('.modal-overlay');
+    const btnClose    = viewerModal.querySelector('.modal-close');
 
     function openViewer(src, type, title) {
       viewerTitle.textContent = title || '';
-
       if (type === 'pdf') {
         viewerImage.style.display = 'none';
         viewerImage.src = '';
@@ -384,7 +386,6 @@ document.addEventListener('DOMContentLoaded', function () {
         viewerImage.src = src;
         viewerImage.alt = title || 'Imagen';
       }
-
       downloadBtn.href = src;
       viewerModal.setAttribute('aria-hidden', 'false');
       document.documentElement.style.overflow = 'hidden';
@@ -398,7 +399,6 @@ document.addEventListener('DOMContentLoaded', function () {
       viewerImage.src = '';
     }
 
-    // Delegated click
     document.addEventListener('click', function (e) {
       const btn = e.target.closest('.view-sellsheet');
       if (btn) {
@@ -438,5 +438,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
   observeFadeIn();
 
-  console.log('[UGB] Universo Gatitos Boticarios — sitio cargado');
+  console.log('[App] Universo Gatitos Boticarios — sitio cargado');
 });

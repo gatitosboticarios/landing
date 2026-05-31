@@ -220,8 +220,25 @@
     </div>
   </div>
 
-  <!-- EmailJS SDK -->
+  <!-- ===== SCRIPTS ===== -->
+
+  <!-- 1. EmailJS SDK (CDN) — debe cargar primero -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script src="js/script.js"></script>
+
+  <!-- 2. Inicialización de EmailJS -->
+  <script>
+    (function() {
+      if (typeof emailjs !== 'undefined') {
+        emailjs.init('ZhnZtDZRCVZU3qlPp');
+        console.log('[EmailJS] SDK inicializado desde index.html');
+      }
+    })();
+  </script>
+
+  <!-- 3. Módulo de métricas (visitas, formularios, descargas) -->
+  <script src="js/metrics.js"></script>
+
+  <!-- 4. App principal (UI, formulario, EmailJS, dinámicos) -->
+  <script src="js/app.js"></script>
 </body>
 </html>
