@@ -270,6 +270,7 @@ document.addEventListener('DOMContentLoaded', function () {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_AUTOREPLY, {
         name: name,
         email: email,
+        message: message,
         contact_type: contact_type
       });
       console.log('[App] ✅ Auto-reply enviado');
