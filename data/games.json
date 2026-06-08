@@ -43,5 +43,25 @@
     "tags": ["Estrategia", "Sabotaje", "Dados"],
     "components": ["40 Tableros de clientes", "80 Marcadores Patita de Gato", "20 Fichas de Insumos", "1 Bolsita", "1 Dado de 6 caras", "8 Tarjetas de Resumen Rápido de Reglas"],
     "order": 3
-  }
+  },
+  {
+  "id": "que-cochinon",
+  "title": "¡Qué Cochinón!",
+  "subtitle": "Spin-off oficial — Trampas, reacciones y trufas mágicas",
+  "description": "Reúne la mayor cantidad de puntos recolectando Trufas Mágicas, aprovechando sus efectos y usando artimañas para sabotear a los demás jugadores. En este festival no gana el más limpio ni el más noble: gana quien sepa revolcarse mejor en el barro sin perder de vista sus trufas.",
+  "quote": "En el Festival de la Primavera, cada trufa cuenta... y cada trampa también.",
+  "players": "2–6",
+  "duration": "30–45 min",
+  "age": "8+",
+  "sellSheet": "assets/sell-sheets/Sell_Sheet_Que_Cochinon.jpg",
+  "manual": "assets/manuales/Manual_Reglas_Que_Cochinon.pdf",
+  "tags": ["Cartas", "Sabotaje", "Dado", "Respuestas", "Caos"],
+  "components": [
+    "30 Cartas de Trufa Mágica",
+    "30 Cartas de Evento ¡Qué Cochinón!",
+    "1 Dado de 6 caras",
+    "6 Tarjetas de Resumen de Reglas"
+  ],
+  "order": 5
+}
 ]
