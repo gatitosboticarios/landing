@@ -12,5 +12,19 @@
     "file": "assets/comics/Comic_Gatitos_Boticarios_2.pdf",
     "description": "Nuevas aventuras y personajes del universo.",
     "order": 2
+  },
+  {
+    "id": "comic-3",
+    "title": "Cómic Gatitos Boticarios — Capítulo 3",
+    "file": "assets/comics/Comic_Gatitos_Boticarios_3.pdf",
+    "description": "Comienza el Festival de la Primavera.",
+    "order": 3
+  },
+  {
+    "id": "comic-4",
+    "title": "Cómic Gatitos Boticarios — Capítulo 4",
+    "file": "assets/comics/Comic_Gatitos_Boticarios_4.pdf",
+    "description": "Continúan los eventos en el Festival de la Primavera.",
+    "order": 4
   }
 ]
